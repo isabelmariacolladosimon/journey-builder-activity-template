@@ -45,6 +45,19 @@ define([
         $.each(inArguments, function (index, inArgument) {
             $.each(inArgument, function (key, val) {
                 
+                if(key === 'postcardURL')
+                {
+                        $('#postcard-url').val(val);
+                       // $('#postcard-preview-content').css('background-image',"url('"+$('#postcard-url').val());
+                
+                
+                }
+               if(key === 'postcardText')                                            
+               {
+                      $('#postcard-text').val(val);
+                     $('#postcard-preview-text').html($('#postcard-text').val());
+               }
+                
               
             });
         });
@@ -70,6 +83,8 @@ define([
         var postcardTextValue = $('#postcard-text').val();
 
         payload['arguments'].execute.inArguments = [{
+            "postcardURL": postcardURLValue,
+            "postcardText":postcardTextValue,
             "tokens": authTokens,
             "emailAddress": "{{Contact.Attribute.PostcardJourney.EmailAddress}}"
         }];
@@ -79,6 +94,10 @@ define([
         console.log(payload);
         connection.trigger('updateActivity', payload);
     }
+    $('#btn-preview')click(function()
+    {
+        $('#postcard-preview-text').html($('#postcard-text').val());
+    });
 
 
 });
